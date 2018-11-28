@@ -113,7 +113,7 @@ class LL1():
                 self.error()
             count += 1
 
-str = '#(Aa+Bb)*(4*4.63+5)/55#'
+str = '#(Aa+Bb)*(4*4.63+5)/55.5+6#'
 rea_lis=[]
 
 for ch in str:
