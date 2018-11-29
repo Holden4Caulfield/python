@@ -7,34 +7,33 @@ from CifaClass import CifaAny
 
 w0=['+','-']
 w1=['*','/']
-
 class Recur():
 
     string_input=''
     word=''
-    next_word=[]
+    next_word=[]              #token 串
     num=0
-    wor_dic={}
+    wor_dic={}               # 数字，标识符，和w0 w1区别开
     def __init__(self,lis,dic):
         self.next_word=lis
         self.word=lis[0]
         self.wor_dic=dic
         self.parser()
     def E(self):
-        print('E-->TG')
+        print('当前单词{:<4}\t\t\t使用文法{}'.format(self.word,'E-->TG'))
         self.T()
         self.G()
     def T(self):
-        print('T-->FH')
+        print('当前单词{:<4}\t\t\t使用文法{}'.format(self.word,'T-->FH'))
         self.F()
         self.H()
     def F(self):
         if self.word in self.wor_dic:
-            print('F-->I')
+            print('当前单词{:<4}\t\t\t使用文法{}'.format(self.word,'F-->I'))
             self.nextword()
             return
         elif self.word=='(':
-            print('F-->(E)')
+            print('当前单词{:<4}\t\t\t使用文法{}'.format(self.word,'F-->(E)'))
             self.nextword()
             self.E()
             if self.word==')':
@@ -49,22 +48,21 @@ class Recur():
 
     def G(self):
         if self.word in w0:
-            print('G-->wo TG')
+            print('当前单词{:<4}\t\t\t使用文法{}'.format(self.word,'G-->wo TG'))
             self.nextword()
             self.T()
             self.G()
         else:
-
-            print('G-->##')
+            print('当前单词{:<4}\t\t\t使用文法{}'.format(self.word,'G-->##'))
     def H(self):
         if self.word in w1:
-            print('H-->w1 FH')
+            print('当前单词{:<4}\t\t\t使用文法{}'.format(self.word,'H-->w1 FH'))
             self.nextword()
             self.F()
             self.H()
             return
         else:
-            print('H-->##')
+            print('当前单词{:<4}\t\t\t使用文法{}'.format(self.word,'H-->##'))
             return
     def nextword(self):
         try:

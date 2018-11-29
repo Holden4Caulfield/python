@@ -1,7 +1,7 @@
 import sys
 sys.setrecursionlimit(1000000)
-Lan = ['E-TH', 'H-wTH', 'H-e', 'T-FG', 'G-bFG', 'G-e', 'F-i', 'F-(E)']
-Vn = ['E', 'T', 'H', 'G', 'F']
+Lan = ['E-TH', 'H-wTH', 'H-e', 'T-FY', 'Y-bFY', 'Y-e', 'F-i', 'F-(E)']
+Vn = ['E', 'T', 'H', 'Y', 'F']
 first_dict = {}
 follow_dict = {}
 
@@ -52,14 +52,14 @@ def get_follow(char):
     return follow_dict[char]
 
 get_first()
-for char in ['H', 'G']:
+for char in ['H', 'Y']:
     get_follow(char)
 for item in follow_dict.items():
     print(item)
 print(follow_dict)
 
 select={}
-count=1
+count=0
 for line in Lan:
     if line[2] in Vn:
         select[count]=first_dict[line[2]]
@@ -71,3 +71,25 @@ for line in Lan:
     count=count+1
 
 print(select)
+dists={}
+for item in select.items():
+    location=item[0]
+    for i in item[1]:
+        if i =='w':
+            for j in ['+','-']:
+                tup=(Lan[location][0],j)
+                dists[tup]=Lan[location][2:]
+        elif i =='b':
+            for j in ['*','/']:
+                tup=(Lan[location][0],j)
+                dists[tup]=Lan[location][2:]
+        elif i == 'e':
+            tup=(Lan[location][0],'#')
+            dists[tup]=Lan[location][2:]
+        else:
+            tup=(Lan[location][0],i)
+            dists[tup]=Lan[location][2:]
+
+print(len(dists))
+print(first_dict)
+print(follow_dict)
