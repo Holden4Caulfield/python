@@ -4,21 +4,24 @@ from CifaClass import CifaAny
 #  T -> F H
 #  H-> w1 F H|ε
 #  F -> I | ( E )
-
 w0=['+','-']
 w1=['*','/']
 class Recur():
 
+    sem=[]
+    t=1
     string_input=''
     word=''
     next_word=[]              #token 串
     num=0
     wor_dic={}               # 数字，标识符，和w0 w1区别开
+    lis_sem=[]
     def __init__(self,lis,dic):
         self.next_word=lis
         self.word=lis[0]
         self.wor_dic=dic
         self.parser()
+        print(self.lis_sem)
     def E(self):
         print('当前单词{:<4}\t\t\t使用文法{}'.format(self.word,'E-->TG'))
         self.T()
@@ -30,6 +33,7 @@ class Recur():
     def F(self):
         if self.word in self.wor_dic:
             print('当前单词{:<4}\t\t\t使用文法{}'.format(self.word,'F-->I'))
+            self.push(self.word)
             self.nextword()
             return
         elif self.word=='(':
@@ -49,16 +53,21 @@ class Recur():
     def G(self):
         if self.word in w0:
             print('当前单词{:<4}\t\t\t使用文法{}'.format(self.word,'G-->wo TG'))
+            op=self.word
             self.nextword()
+
             self.T()
+            self.GEQ(op)
             self.G()
         else:
             print('当前单词{:<4}\t\t\t使用文法{}'.format(self.word,'G-->##'))
     def H(self):
         if self.word in w1:
             print('当前单词{:<4}\t\t\t使用文法{}'.format(self.word,'H-->w1 FH'))
+            op=self.word
             self.nextword()
             self.F()
+            self.GEQ(op)
             self.H()
             return
         else:
@@ -78,6 +87,20 @@ class Recur():
             exit(0)
         else:
             print('done')
+
+    def GEQ(self,Char):
+        strn=''
+        t_now='t'+str(self.t)
+        a=self.sem.pop()
+        b=self.sem.pop()
+        #print('({} {} {} {})'.format(Char,b,a,t_now))
+
+        strn='('+Char+' '+b+' '+a+' '+t_now+')'
+        self.lis_sem.append(strn)
+        self.t=self.t+1
+        self.sem.append(t_now)
+    def push(self,word):
+        self.sem.append(word)
 
 
 rea_lis=[]

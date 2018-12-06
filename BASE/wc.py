@@ -6,7 +6,7 @@ mask=imread('lian.png')
 f = open("data.txt",'r',encoding='utf-8')
 t = f.read()
 
-f.close() 
+f.close()
 w=wordcloud.WordCloud(font_path="msyh.ttc",\
 	background_color="white",\
 	mask=mask)

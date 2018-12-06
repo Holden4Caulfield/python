@@ -206,7 +206,7 @@ class CifaAny():
                             print("{0:<10}{1:^6}{2:>5}>".format(
                                 '数字', token[:-1], self.dict_const[token[:-1]][1]))
                             token = ''
-                
+
 
                         else:
                             try:
